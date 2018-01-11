@@ -1,0 +1,35 @@
+$(document).ready(function(){
+  var body_part_chosen;
+  var exercise_array = ["Back","Biceps","Chest","Triceps","Legs","Shoulders","Abs","Traps","Elliptical","Treadmill","Stationary Bike","Kalisthetics"];
+  var todays_workout = []; // hold the two exercises
+  
+  $(".active").on("click",function(){
+    body_part_chosen = $(this).html();
+    todays_workout.push(body_part_chosen); // push button to array
+    $("#firstBodyPart").html("First Exercise:" + "\n" + body_part_chosen);
+  });   
+  
+  $("#generateButton").on("click",function(){
+    var random_index = Math.floor(Math.random() * 1000) % (12); // indice to generate a random exercise
+    var random_exercise = exercise_array[random_index];
+    while(random_exercise === body_part_chosen) // make sure we don't have the same two exercises
+      {
+       // rerandomize it
+       random_index = Math.floor(Math.random() * 1000) % (12);
+       random_exercise = exercise_array[random_index];
+      if(random_exercise !== body_part_chosen)
+        {
+          break;
+        }
+      }
+    todays_workout[1] = random_exercise;
+   
+    $("#outputScreen").html("Today's Workout:\n" + todays_workout[0] + " and " +  todays_workout[1]);
+  });
+  // clears the output
+  $("#clearButton").on("click",function(){
+    todays_workout = [];
+    $("#firstBodyPart").html("First Exercise:");
+    $("#outputScreen").html("Today's workout");
+  });
+});
